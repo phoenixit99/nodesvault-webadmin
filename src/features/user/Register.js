@@ -3,32 +3,46 @@ import {Link} from 'react-router-dom'
 import LandingIntro from './LandingIntro'
 import ErrorText from  '../../components/Typography/ErrorText'
 import InputText from '../../components/Input/InputText'
+import { register } from '../../services/authService';
 
 function Register(){
 
     const INITIAL_REGISTER_OBJ = {
         name : "",
         password : "",
-        emailId : ""
+        email : ""
     }
 
     const [loading, setLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState("")
     const [registerObj, setRegisterObj] = useState(INITIAL_REGISTER_OBJ)
 
-    const submitForm = (e) =>{
+    const submitForm = async (e) =>{
         e.preventDefault()
         setErrorMessage("")
 
         if(registerObj.name.trim() === "")return setErrorMessage("Name is required! (use any value)")
-        if(registerObj.emailId.trim() === "")return setErrorMessage("Email Id is required! (use any value)")
+        if(registerObj.email.trim() === "")return setErrorMessage("Email Id is required! (use any value)")
         if(registerObj.password.trim() === "")return setErrorMessage("Password is required! (use any value)")
         else{
-            setLoading(true)
-            // Call API to check user credentials and save token in localstorage
-            localStorage.setItem("token", "DumyTokenHere")
-            setLoading(false)
-            window.location.href = '/app/welcome'
+            setLoading(true);
+            try {
+                const payload = {
+                    userName: registerObj.name,
+                    email: registerObj.email,
+                    password: registerObj.password,
+                    role: "user"
+                };
+
+                const data = await register(payload);
+                localStorage.setItem("token", data.token);
+                window.location.href = '/app/welcome';
+            } catch (error) {
+                setErrorMessage("Registration failed. Please try again.",error);
+            } finally {
+                setLoading(false);
+            }
+            
         }
     }
 
@@ -52,7 +66,7 @@ function Register(){
 
                             <InputText defaultValue={registerObj.name} updateType="name" containerStyle="mt-4" labelTitle="Name" updateFormValue={updateFormValue}/>
 
-                            <InputText defaultValue={registerObj.emailId} updateType="emailId" containerStyle="mt-4" labelTitle="Email Id" updateFormValue={updateFormValue}/>
+                            <InputText defaultValue={registerObj.email} updateType="email" containerStyle="mt-4" labelTitle="Email Id" updateFormValue={updateFormValue}/>
 
                             <InputText defaultValue={registerObj.password} type="password" updateType="password" containerStyle="mt-4" labelTitle="Password" updateFormValue={updateFormValue}/>
 

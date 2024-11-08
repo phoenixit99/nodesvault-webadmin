@@ -3,12 +3,15 @@ import { useDispatch } from "react-redux"
 import InputText from '../../../components/Input/InputText'
 import ErrorText from '../../../components/Typography/ErrorText'
 import { showNotification } from "../../common/headerSlice"
-import { addNewLead } from "../leadSlice"
-
+import { createProject } from "../../../services/projectService"
 const INITIAL_LEAD_OBJ = {
-    first_name : "",
-    last_name : "",
-    email : ""
+    name: "",
+    avatar: "",
+    apy: "",
+    services: "",
+    explorer: "",
+    content: "",
+    type: "",
 }
 
 function AddLeadModalBody({closeModal}){
@@ -18,20 +21,30 @@ function AddLeadModalBody({closeModal}){
     const [leadObj, setLeadObj] = useState(INITIAL_LEAD_OBJ)
 
 
-    const saveNewLead = () => {
-        if(leadObj.first_name.trim() === "")return setErrorMessage("First Name is required!")
-        else if(leadObj.email.trim() === "")return setErrorMessage("Email id is required!")
+    const saveNewLead = async () => {
+        if(leadObj.name.trim() === "")return setErrorMessage("Project Name is required!")
+        else if(leadObj.content.trim() === "")return setErrorMessage("Content id is required!")
         else{
-            let newLeadObj = {
-                "id": 7,
-                "email": leadObj.email,
-                "first_name": leadObj.first_name,
-                "last_name": leadObj.last_name,
-                "avatar": "https://reqres.in/img/faces/1-image.jpg"
+            setLoading(true);
+            try {
+                const payload = {
+                    name: leadObj.name,
+                    avatar: leadObj.avatar,
+                    apy: leadObj.apy,
+                    services: leadObj.services,
+                    explorer: leadObj.explorer,
+                    content: leadObj.content,
+                    type: leadObj.type,
+                };
+
+                const data = await createProject(payload);
+                dispatch(showNotification({ message: "New Project Created!", status: 1 }));
+                closeModal();
+            } catch (error) {
+                setErrorMessage("Project creation failed. Please try again.");
+            } finally {
+                setLoading(false);
             }
-            dispatch(addNewLead({newLeadObj}))
-            dispatch(showNotification({message : "New Lead Added!", status : 1}))
-            closeModal()
         }
     }
 
@@ -43,11 +56,17 @@ function AddLeadModalBody({closeModal}){
     return(
         <>
 
-            <InputText type="text" defaultValue={leadObj.first_name} updateType="first_name" containerStyle="mt-4" labelTitle="First Name" updateFormValue={updateFormValue}/>
+            <InputText type="text" defaultValue={leadObj.name} updateType="name" containerStyle="mt-4" labelTitle="Name" updateFormValue={updateFormValue}/>
 
-            <InputText type="text" defaultValue={leadObj.last_name} updateType="last_name" containerStyle="mt-4" labelTitle="Last Name" updateFormValue={updateFormValue}/>
+            <InputText type="text" defaultValue={leadObj.avatar} updateType="avatar" containerStyle="mt-4" labelTitle="Avatar URL" updateFormValue={updateFormValue}/>
 
-            <InputText type="email" defaultValue={leadObj.email} updateType="email" containerStyle="mt-4" labelTitle="Email Id" updateFormValue={updateFormValue}/>
+            <InputText type="text" defaultValue={leadObj.apy} updateType="apy" containerStyle="mt-4" labelTitle="APY" updateFormValue={updateFormValue}/>
+
+            <InputText type="text" defaultValue={leadObj.services} updateType="services" containerStyle="mt-4" labelTitle="Services" updateFormValue={updateFormValue}/>
+
+            <InputText type="text" defaultValue={leadObj.explorer} updateType="explorer" containerStyle="mt-4" labelTitle="Explorer" updateFormValue={updateFormValue}/>
+
+            <InputText type="text" defaultValue={leadObj.content} updateType="content" containerStyle="mt-4" labelTitle="Content" updateFormValue={updateFormValue}/>
 
 
             <ErrorText styleClass="mt-16">{errorMessage}</ErrorText>

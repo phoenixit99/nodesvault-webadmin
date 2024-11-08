@@ -4,6 +4,7 @@ import  ChevronRightIcon  from "@heroicons/react/24/solid/ChevronRightIcon";
 import moment from "moment";
 import { CALENDAR_EVENT_STYLE } from "./util";
 
+
 const THEME_BG = CALENDAR_EVENT_STYLE
 
 function CalendarView({calendarEvents, addNewEvent, openDayDetail}){

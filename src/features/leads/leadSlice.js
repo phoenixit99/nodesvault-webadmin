@@ -1,11 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import axios from 'axios'
-
-
+import { getAllProjects } from '../../services/projectService';
 
 export const getLeadsContent = createAsyncThunk('/leads/content', async () => {
-	const response = await axios.get('/api/users?page=2', {})
-	return response.data;
+    try {
+        const data = await getAllProjects();
+        return data;
+    } catch (error) {
+        throw new Error('Failed to fetch projects');
+    }
 })
 
 export const leadsSlice = createSlice({

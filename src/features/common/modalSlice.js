@@ -16,7 +16,7 @@ export const modalSlice = createSlice({
             state.isOpen = true
             state.bodyType = bodyType
             state.title = title
-            state.size = size || 'md'
+            state.size = size || 'xxl'
             state.extraObject = extraObject
         },
 
