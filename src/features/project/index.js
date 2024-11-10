@@ -19,6 +19,8 @@ const TopSideButtons = () => {
     const closeModal = () => {
         // Logic to close the modal, e.g., dispatch an action to close the modal
         dispatch(closeModal()); // Replace with your actual action to close the modal
+        fetchProjects(); // Call the fetch function to refresh the project list
+
     };
 
     const openAddNewLeadModal = () => {
@@ -43,12 +45,8 @@ function Leads(){
 
     useEffect(() => {
         const fetchProjects = async () => {
-            console.log('Fetching projects...'); // Log before the API call
-
             try {
                 const data = await getAllProduct();
-                console.log('Projects fetched successfully:', data); // Log the fetched data
-
                 setProjects(data);
             } catch (error) {
                 console.error('Error fetching projects:', error); // Log the error
