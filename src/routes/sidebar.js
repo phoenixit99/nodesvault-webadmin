@@ -30,7 +30,7 @@ const routes = [
     name: 'Dashboard',
   },
   {
-    path: '/app/leads', // url
+    path: '/app/project', // url
     icon: <InboxArrowDownIcon className={iconClasses}/>, // icon component
     name: 'Project', // name that appear in Sidebar
   },

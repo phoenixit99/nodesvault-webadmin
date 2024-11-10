@@ -2,21 +2,27 @@ import moment from "moment"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import TitleCard from "../../components/Cards/TitleCard"
-import { openModal } from "../common/modalSlice"
-import { deleteLead, getLeadsContent } from "./leadSlice"
+import { openModal, closeModal } from "../common/modalSlice"
+import { deleteLead, getLeadsContent } from "./projectSlice"
 import { CONFIRMATION_MODAL_CLOSE_TYPES, MODAL_BODY_TYPES } from '../../utils/globalConstantUtil'
 import TrashIcon from '@heroicons/react/24/outline/TrashIcon'
-import { getAllProjects } from '../../services/projectService';
+import { getAllProduct } from '../../services/projectService';
 import React, {  useState } from 'react';
 import { deleteProject } from '../../services/projectService';
 import { showNotification } from '../common/headerSlice'
+import AddProductModalBody from './components/AddProductModalBody'; // Import the new modal body component
 
 const TopSideButtons = () => {
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+
+    const closeModal = () => {
+        // Logic to close the modal, e.g., dispatch an action to close the modal
+        dispatch(closeModal()); // Replace with your actual action to close the modal
+    };
 
     const openAddNewLeadModal = () => {
-        dispatch(openModal({title : "Add New Project", bodyType : MODAL_BODY_TYPES.LEAD_ADD_NEW}))
+        dispatch(openModal({title : "Add New Project", bodyType : MODAL_BODY_TYPES.PRODUCT_ADD_NEW}))
     }
 
     return(
@@ -37,10 +43,15 @@ function Leads(){
 
     useEffect(() => {
         const fetchProjects = async () => {
+            console.log('Fetching projects...'); // Log before the API call
+
             try {
-                const data = await getAllProjects();
+                const data = await getAllProduct();
+                console.log('Projects fetched successfully:', data); // Log the fetched data
+
                 setProjects(data);
             } catch (error) {
+                console.error('Error fetching projects:', error); // Log the error
                 setError('Failed to fetch projects');
             } finally {
                 setLoading(false);
@@ -82,11 +93,10 @@ function Leads(){
                 <table className="table w-full">
                     <thead>
                     <tr>
+                        <th>Logo Project</th>
                         <th>Name</th>
-                        <th>APY</th>
-                        <th>Services</th>
-                        <th>explorer</th>
-                        <th>type</th>
+                        <th>Base Price</th>
+                        <th>Description</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -99,18 +109,13 @@ function Leads(){
                                         <div className="flex items-center space-x-3">
                                             <div className="avatar">
                                                 <div className="mask mask-squircle w-12 h-12">
-                                                    <img src={l.avatar} alt="Avatar" />
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div className="font-bold">{l.name}</div>
+                                                <img src={`https://webadmin-api.nodesvault.com/${l.avatar}`} alt="Avatar" />                                                </div>
                                             </div>
                                         </div>
                                     </td>
-                                    <td>{l.apy}</td>
-                                    <td>{l.services}</td>
-                                    <td>{l.explorer}</td>
-                                    <td>{l.type}</td>
+                                    <td>{l.name}</td>
+                                    <td>{l.base_price}$</td>
+                                    <td>{l.description}</td>
                                     <td><button className="btn btn-square btn-ghost" onClick={() => deleteCurrentLead(k)}><TrashIcon className="w-5"/></button></td>
                                     </tr>
                                 )
