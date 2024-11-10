@@ -15,6 +15,22 @@ import AddProductModalBody from './components/AddProductModalBody'; // Import th
 const TopSideButtons = () => {
 
     const dispatch = useDispatch();
+    const [projects, setProjects] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+  
+
+    const fetchProjects = async () => {
+        setLoading(true); // Set loading state
+        try {
+            const data = await getAllProduct(); // Call your API function
+            setProjects(data); // Update the state with the fetched projects
+        } catch (error) {
+            setError('Failed to fetch projects');
+        } finally {
+            setLoading(false); // Reset loading state
+        }
+    };
 
     const closeModal = () => {
         // Logic to close the modal, e.g., dispatch an action to close the modal
@@ -43,19 +59,20 @@ function Leads(){
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    const fetchProjects = async () => {
+        setLoading(true); // Set loading state
+        try {
+            const data = await getAllProduct(); // Call your API function
+            setProjects(data); // Update the state with the fetched projects
+        } catch (error) {
+            setError('Failed to fetch projects');
+        } finally {
+            setLoading(false); // Reset loading state
+        }
+    };
+    
     useEffect(() => {
-        const fetchProjects = async () => {
-            try {
-                const data = await getAllProduct();
-                setProjects(data);
-            } catch (error) {
-                console.error('Error fetching projects:', error); // Log the error
-                setError('Failed to fetch projects');
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchProjects();
+        fetchProjects(); // Fetch projects on component mount
     }, []);
 
 

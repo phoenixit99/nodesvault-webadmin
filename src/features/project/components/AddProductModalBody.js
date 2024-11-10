@@ -5,6 +5,8 @@ import ErrorText from '../../../components/Typography/ErrorText'
 import InputFile from '../../../components/Input/InputFile.js'; // Assuming you have an InputFile component
 import { showNotification } from "../../common/headerSlice"
 import { createProduct } from "../../../services/projectService"
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const INITIAL_PRODUCT_OBJ = {
     name: '',
@@ -76,14 +78,19 @@ function AddProductModalBody({closeModal}){
                 labelTitle="Product Name"
                 updateFormValue={updateFormValue}
             />
-            <InputText
-                type="text"
-                value={productObj.description}
-                updateType="description"
-                containerStyle="mt-4"
-                labelTitle="Description"
-                updateFormValue={updateFormValue}
-            />
+              <div className="mt-4">
+                <label className="label">
+                    <span className="label-text">Description</span>
+                </label>
+                <ReactQuill
+                    value={productObj.description}
+                    updateFormValue={updateFormValue}
+                    placeholder="Enter product description"
+                    theme="snow"
+                    style={{ height: '150px' , paddingBottom: '20px' }} // Set height to 200px
+                />
+            </div>
+            
             <InputText
                 type="number"
                 value={productObj.base_price}
