@@ -124,7 +124,7 @@ function Leads(){
                                         <div className="flex items-center space-x-3">
                                             <div className="avatar">
                                                 <div className="mask mask-squircle w-12 h-12">
-                                                <img src={`https://webadmin-api.nodesvault.com/${l.avatar}`} alt="Avatar" />                                                </div>
+                                                <img src={`https://webadmin-api.nodesvault.com/${l.image_url}`} alt="Avatar" />                                                </div>
                                             </div>
                                         </div>
                                     </td>
