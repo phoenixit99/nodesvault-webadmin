@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { getAllProjects } from '../../services/projectService';
+import { getAllProduct } from '../../services/projectService';
 
 export const getLeadsContent = createAsyncThunk('/leads/content', async () => {
     try {
-        const data = await getAllProjects();
+        const data = await getAllProduct();
         return data;
     } catch (error) {
         throw new Error('Failed to fetch projects');

@@ -6,10 +6,9 @@ import { openModal, closeModal } from "../common/modalSlice"
 import { deleteLead, getLeadsContent } from "./projectSlice"
 import { CONFIRMATION_MODAL_CLOSE_TYPES, MODAL_BODY_TYPES } from '../../utils/globalConstantUtil'
 import TrashIcon from '@heroicons/react/24/outline/TrashIcon'
+import PlusIcon from '@heroicons/react/24/outline/PlusIcon'
 import { getAllProduct } from '../../services/projectService';
 import React, {  useState } from 'react';
-import { deleteProject } from '../../services/projectService';
-import { showNotification } from '../common/headerSlice'
 import AddProductModalBody from './components/AddProductModalBody'; // Import the new modal body component
 
 const TopSideButtons = () => {
@@ -33,10 +32,8 @@ const TopSideButtons = () => {
     };
 
     const closeModal = () => {
-        // Logic to close the modal, e.g., dispatch an action to close the modal
         dispatch(closeModal()); // Replace with your actual action to close the modal
         fetchProjects(); // Call the fetch function to refresh the project list
-
     };
 
     const openAddNewLeadModal = () => {
@@ -75,26 +72,32 @@ function Leads(){
         fetchProjects(); // Fetch projects on component mount
     }, []);
 
-
-    const deleteCurrentLead = (projectId) => {
+    const openDurationModal = (productId) => {
         dispatch(openModal({
-            title: "Confirmation",
-            bodyType: MODAL_BODY_TYPES.CONFIRMATION,
-            extraObject: {
-                message: `Are you sure you want to delete this Project?`,
-                type: CONFIRMATION_MODAL_CLOSE_TYPES.LEAD_DELETE,
-                onConfirm: async () => {
-                    try {
-                        await deleteProject(projectId);
-                        dispatch(showNotification({ message: "Project deleted successfully!", status: 1 }));
-                        // Update state to remove the deleted project
-                    } catch (error) {
-                        dispatch(showNotification({ message: "Failed to delete project. Please try again.", status: 0 }));
-                    }
-                }
-            }
-        }));
-    };
+            title : "Add duration Project", 
+            bodyType : MODAL_BODY_TYPES.PRODUCT_ADD_DURATION,
+            payload: productId
+        }))
+    }
+    // const deleteCurrentLead = (projectId) => {
+    //     dispatch(openModal({
+    //         title: "Confirmation",
+    //         bodyType: MODAL_BODY_TYPES.CONFIRMATION,
+    //         extraObject: {
+    //             message: `Are you sure you want to delete this Project?`,
+    //             type: CONFIRMATION_MODAL_CLOSE_TYPES.LEAD_DELETE,
+    //             onConfirm: async () => {
+    //                 try {
+    //                     await deleteProject(projectId);
+    //                     dispatch(showNotification({ message: "Project deleted successfully!", status: 1 }));
+    //                     // Update state to remove the deleted project
+    //                 } catch (error) {
+    //                     dispatch(showNotification({ message: "Failed to delete project. Please try again.", status: 0 }));
+    //                 }
+    //             }
+    //         }
+    //     }));
+    // };
     if (loading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
 
@@ -131,7 +134,8 @@ function Leads(){
                                     <td>{l.name}</td>
                                     <td>{l.base_price}$</td>
                                     <td>{l.description}</td>
-                                    <td><button className="btn btn-square btn-ghost" onClick={() => deleteCurrentLead(k)}><TrashIcon className="w-5"/></button></td>
+                                    <td><button className="btn btn-square btn-ghost" onClick={() => openDurationModal(l.product_id)}><PlusIcon className="w-5"/></button></td>
+                                    {/* <td><button className="btn btn-square btn-ghost" onClick={() => deleteCurrentLead(k)}><TrashIcon className="w-5"/></button></td> */}
                                     </tr>
                                 )
                             })
