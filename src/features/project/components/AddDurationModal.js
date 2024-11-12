@@ -33,7 +33,7 @@ function AddDurationModal({ productId, closeModal}){
             product_id: productId,
             duration_months: parseInt(productObj.duration_months, 1), // Ensure it's a number
             description: productObj.description,
-            base_price: productId.base_price
+            base_price: parseFloat(productObj.base_price, 1)
         };
 
         try {

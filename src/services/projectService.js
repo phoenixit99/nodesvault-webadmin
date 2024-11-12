@@ -8,7 +8,7 @@ export const createDuration = async (projectData) => {
         const response = await axios.post('/api/durations', projectData);
         return response.data;
     } catch (error) {
-        throw new Error('Project creation failed');
+        throw new Error('create duration creation failed',projectData);
     }
 };
 
