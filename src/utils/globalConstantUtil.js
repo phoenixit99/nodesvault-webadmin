@@ -6,6 +6,7 @@ module.exports = Object.freeze({
         CONFIRMATION : "CONFIRMATION",
         PRODUCT_ADD_NEW : "PRODUCT_ADD_NEW",
         PRODUCT_ADD_DURATION : "PRODUCT_ADD_DURATION",
+        PRODUCT_VIEW_DURATION : "PRODUCT_VIEW_DURATION",
         DEFAULT : "",
     },
 

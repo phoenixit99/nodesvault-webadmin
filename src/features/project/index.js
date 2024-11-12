@@ -79,6 +79,14 @@ function Leads(){
             payload: productId
         }))
     }
+
+    const viewDurationModal = (productId) => {
+        dispatch(openModal({
+            title : "View duration Project", 
+            bodyType : MODAL_BODY_TYPES.PRODUCT_VIEW_DURATION,
+            payload: productId
+        }))
+    }
     // const deleteCurrentLead = (projectId) => {
     //     dispatch(openModal({
     //         title: "Confirmation",
@@ -135,6 +143,7 @@ function Leads(){
                                     <td>{l.base_price}$</td>
                                     <td>{l.description}</td>
                                     <td><button className="btn btn-square btn-ghost" onClick={() => openDurationModal(l.product_id)}><PlusIcon className="w-5"/></button></td>
+                                    <td><button className="btn btn-square" onClick={() => viewDurationModal(l.product_id)}>Price</button></td>
                                     {/* <td><button className="btn btn-square btn-ghost" onClick={() => deleteCurrentLead(k)}><TrashIcon className="w-5"/></button></td> */}
                                     </tr>
                                 )

@@ -10,6 +10,7 @@ import 'react-quill/dist/quill.snow.css';
 
 const INITIAL_PRODUCT_OBJ = {
     duration_months: '',
+    base_price: '',
     description: '',
 }
 
@@ -24,14 +25,15 @@ function AddDurationModal({ productId, closeModal}){
         if (!productObj.duration_months) {
             console.log('Product Name is required.');
         }
-        if (!productObj.description) {
-            console.log('Description is required.');
+        if (!productObj.base_price) {
+            console.log('Base price is required.');
         }
         // Prepare the payload
         const payload = {
             product_id: productId,
             duration_months: parseInt(productObj.duration_months, 1), // Ensure it's a number
             description: productObj.description,
+            base_price: productId.base_price
         };
 
         try {
@@ -61,6 +63,14 @@ function AddDurationModal({ productId, closeModal}){
                 updateType="name"
                 containerStyle="mt-4"
                 labelTitle="Duration title"
+                updateFormValue={updateFormValue}
+            />
+            <InputText
+                type="text"
+                defaultValue={productObj.base_price}
+                updateType="base_price"
+                containerStyle="mt-4"
+                labelTitle="Duration Price"
                 updateFormValue={updateFormValue}
             />
               <div className="mt-4">

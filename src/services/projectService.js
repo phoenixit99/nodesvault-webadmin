@@ -28,3 +28,12 @@ export const getAllProduct = async (projectData) => {
         throw new Error('Project creation failed');
     }
 };
+
+export const getDurationsByProductId = async (productId) => {
+    try {
+        const response = await axios.get(`/api/durations/product/${productId}`);
+        return response.data; // Assuming the API returns an array of durations
+    } catch (error) {
+        throw new Error('Failed to fetch durations');
+    }
+};
