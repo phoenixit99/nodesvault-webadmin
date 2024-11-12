@@ -34,7 +34,7 @@ function AddDurationModal({ productId, closeModal}){
         // Prepare the payload
         const payload = {
             product_id: productId,
-            duration_months: parseInt(productObj.duration_months, 1), // Ensure it's a number
+            duration_months: parseFloat(productObj.duration_months, 1), // Ensure it's a number
             description: productObj.description,
             base_price: parseFloat(productObj.base_price, 1)
         };

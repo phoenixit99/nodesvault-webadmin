@@ -5,6 +5,8 @@ import axios from '../config/axiosConfig';
 export const createDuration = async (projectData) => {
 
     try {
+        const curlCommand = `curl -X POST 'https://webadmin-api.nodesvault.com/api/durations' -H 'Content-Type: application/json' -d '${JSON.stringify(projectData)}'`;
+        console.log('cURL Command:', curlCommand); // Print the cURL 
         const response = await axios.post('/api/durations', projectData);
         return response.data;
     } catch (error) {
