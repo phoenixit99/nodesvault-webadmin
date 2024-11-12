@@ -39,6 +39,7 @@ function AddDurationModal({ productId, closeModal}){
             base_price: parseFloat(productObj.base_price, 1)
         };
         try {
+            console.log(payload);
             await createDuration(payload); // Call your service function to create the duration
             showNotification({ message: 'Duration added successfully!', status: 1 });
             closeModal(); // Close the modal after successful creation
