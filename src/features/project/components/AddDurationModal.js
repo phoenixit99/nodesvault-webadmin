@@ -23,10 +23,13 @@ function AddDurationModal({ productId, closeModal}){
 
     const saveNewProduct = async () => {
         if (!productObj.duration_months) {
-            console.log('Product Name is required.');
+            console.log('Duration is required.');
         }
         if (!productObj.base_price) {
             console.log('Base price is required.');
+        }
+        if (!productObj.duration_months || !productObj.base_price) {
+            return setErrorMessage('Duration months and price are required!');
         }
         // Prepare the payload
         const payload = {
@@ -35,7 +38,6 @@ function AddDurationModal({ productId, closeModal}){
             description: productObj.description,
             base_price: parseFloat(productObj.base_price, 1)
         };
-
         try {
             await createDuration(payload); // Call your service function to create the duration
             showNotification({ message: 'Duration added successfully!', status: 1 });
@@ -46,13 +48,19 @@ function AddDurationModal({ productId, closeModal}){
     };
 
     const updateFormValue = ({updateType, value}) => {
-
-        setErrorMessage('');
         setProductObj((prev) => {
             const updatedProductObj = { ...prev, [updateType]: value };
             return updatedProductObj;
         });
-    }
+    };
+
+    const updateFormValueDescription = (updateType, value) => {
+        setErrorMessage(''); // Clear any previous error messages
+        setProductObj((prev) => {
+            const updatedProductObj = { ...prev, [updateType]: value }; // Update the specific field
+            return updatedProductObj; // Return the updated object
+        });
+    };
 
     return(
         <>
@@ -60,7 +68,7 @@ function AddDurationModal({ productId, closeModal}){
 <InputText
                 type="text"
                 defaultValue={productObj.duration_months}
-                updateType="name"
+                updateType="duration_months"
                 containerStyle="mt-4"
                 labelTitle="Duration title"
                 updateFormValue={updateFormValue}
@@ -78,8 +86,10 @@ function AddDurationModal({ productId, closeModal}){
                     <span className="label-text">Description</span>
                 </label>
                 <ReactQuill
-                    value={productObj.description}
-                    updateFormValue={updateFormValue}
+                    defaultValue={productObj.description}
+                    onChange={(value) => {
+                        updateFormValueDescription('description', value)
+                    }} // Update the description on change
                     placeholder="Enter product description"
                     theme="snow"
                     style={{ height: '150px' , paddingBottom: '20px' }} // Set height to 200px

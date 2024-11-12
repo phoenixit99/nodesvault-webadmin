@@ -26,11 +26,10 @@ const DurationListModal = ({ closeModal, productId }) => {
 
     return (
         <div>
-            <h2>Durations for Product ID: {productId}</h2>
             <ul>
                 {durations.map((duration) => (
-                    <li key={duration.id}>
-                        {duration.duration_months} months - {duration.description}
+    <li key={duration.id} style={{ padding: '10px 0' }}> {/* Set padding top and bottom */}
+                        {duration.duration_months} months - {duration.base_price}$
                     </li>
                 ))}
             </ul>

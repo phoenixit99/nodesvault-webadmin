@@ -58,13 +58,20 @@ function AddProductModalBody({closeModal}){
         setProductObj({ ...productObj, image: event.target.files[0] });
     };
     const updateFormValue = ({updateType, value}) => {
-
-        setErrorMessage('');
         setProductObj((prev) => {
             const updatedProductObj = { ...prev, [updateType]: value };
             return updatedProductObj;
         });
-    }
+    };
+    
+    const updateFormValueDescription = (updateType, value) => {
+        setErrorMessage(''); // Clear any previous error messages
+        setProductObj((prev) => {
+            const updatedProductObj = { ...prev, [updateType]: value }; // Update the specific field
+            return updatedProductObj; // Return the updated object
+        });
+    };
+
 
     return(
         <>
@@ -83,9 +90,12 @@ function AddProductModalBody({closeModal}){
                     <span className="label-text">Description</span>
                 </label>
                 <ReactQuill
-                    value={productObj.description}
-                    updateFormValue={updateFormValue}
                     placeholder="Enter product description"
+                    defaultValue={productObj.description}
+                    onChange={(value) => {
+                        updateFormValueDescription('description', value)
+                    }} // Update the description on change
+
                     theme="snow"
                     style={{ height: '150px' , paddingBottom: '20px' }} // Set height to 200px
                 />
