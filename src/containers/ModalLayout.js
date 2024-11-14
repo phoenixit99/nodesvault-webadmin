@@ -7,6 +7,8 @@ import AddProductModalBody from '../features/project/components/AddProductModalB
 import ConfirmationModalBody from '../features/common/components/ConfirmationModalBody'
 import AddDurationModal from '../features/project/components/AddDurationModal'
 import DurationListModal from '../features/project/components/DurationListModal'
+import EditProductModal from '../features/project/components/EditProductModal'
+
 
 function ModalLayout(){
 
@@ -35,6 +37,7 @@ function ModalLayout(){
                              [MODAL_BODY_TYPES.PRODUCT_ADD_NEW] : <AddProductModalBody closeModal={close} extraObject={extraObject}/>,
                              [MODAL_BODY_TYPES.PRODUCT_ADD_DURATION] : <AddDurationModal closeModal={close} productId={payload}/>,
                              [MODAL_BODY_TYPES.PRODUCT_VIEW_DURATION] : <DurationListModal closeModal={close} productId={payload}/>,
+                             [MODAL_BODY_TYPES.PRODUCT_UPDATE_NEW] : <EditProductModal closeModal={close} product={payload}/>,
                              [MODAL_BODY_TYPES.CONFIRMATION] : <ConfirmationModalBody extraObject={extraObject} closeModal={close}/>,
                              [MODAL_BODY_TYPES.DEFAULT] : <div></div>
                     }[bodyType]

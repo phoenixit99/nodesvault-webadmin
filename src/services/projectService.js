@@ -39,3 +39,31 @@ export const getDurationsByProductId = async (productId) => {
         throw new Error('Failed to fetch durations');
     }
 };
+
+export const updateDuration = async (durationData) => {
+    try {
+        const response = await axios.put(`/api/durations/${durationData.duration_id}`, durationData); // Assuming the product has an id
+        return response.data;
+    } catch (error) {
+        throw new Error('Failed to update product');
+    }
+};
+
+
+export const getProductById = async (productId) => {
+    try {
+        const response = await axios.get(`/api/products/${productId}`);
+        return response.data;
+    } catch (error) {
+        throw new Error('getProductById creation failed',error);
+    }
+};
+
+export const updateProduct = async (productData) => {
+    try {
+        const response = await axios.put(`/api/products/${productData.product_id}`, productData); // Assuming the product has an id
+        return response.data;
+    } catch (error) {
+        throw new Error('Failed to update product');
+    }
+};

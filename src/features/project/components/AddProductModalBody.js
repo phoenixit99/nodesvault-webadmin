@@ -15,7 +15,7 @@ const INITIAL_PRODUCT_OBJ = {
     image: null,
 }
 
-function AddProductModalBody({closeModal}){
+function AddProductModalBody({ closeModal }) {
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState("")
@@ -54,16 +54,16 @@ function AddProductModalBody({closeModal}){
         }
     };
 
-        const handleFileChange = (event) => {
+    const handleFileChange = (event) => {
         setProductObj({ ...productObj, image: event.target.files[0] });
     };
-    const updateFormValue = ({updateType, value}) => {
+    const updateFormValue = ({ updateType, value }) => {
         setProductObj((prev) => {
             const updatedProductObj = { ...prev, [updateType]: value };
             return updatedProductObj;
         });
     };
-    
+
     const updateFormValueDescription = (updateType, value) => {
         setErrorMessage(''); // Clear any previous error messages
         setProductObj((prev) => {
@@ -73,10 +73,10 @@ function AddProductModalBody({closeModal}){
     };
 
 
-    return(
+    return (
         <>
 
-<InputText
+            <InputText
                 type="text"
                 defaultValue={productObj.name}
 
@@ -85,7 +85,7 @@ function AddProductModalBody({closeModal}){
                 labelTitle="Product Name"
                 updateFormValue={updateFormValue}
             />
-              <div className="mt-4">
+            <div className="mt-4">
                 <label className="label">
                     <span className="label-text">Description</span>
                 </label>
@@ -97,10 +97,10 @@ function AddProductModalBody({closeModal}){
                     }} // Update the description on change
 
                     theme="snow"
-                    style={{ height: '150px' , paddingBottom: '20px' }} // Set height to 200px
+                    style={{ height: '150px', paddingBottom: '20px' }} // Set height to 200px
                 />
             </div>
-            
+
             <InputText
                 type="number"
                 value={productObj.base_price}
@@ -110,7 +110,7 @@ function AddProductModalBody({closeModal}){
                 updateFormValue={updateFormValue}
             />
 
-         <InputFile
+            <InputFile
                 labelTitle="Image File"
                 onChange={handleFileChange}
                 containerStyle="mt-4"
@@ -118,8 +118,8 @@ function AddProductModalBody({closeModal}){
 
             <ErrorText styleClass="mt-16">{errorMessage}</ErrorText>
             <div className="modal-action">
-                <button  className="btn btn-ghost" onClick={() => closeModal()}>Cancel</button>
-                <button  className="btn btn-primary px-6" onClick={() => saveNewProduct()}>Save</button>
+                <button className="btn btn-ghost" onClick={() => closeModal()}>Cancel</button>
+                <button className="btn btn-primary px-6" onClick={() => saveNewProduct()}>Save</button>
             </div>
         </>
     )

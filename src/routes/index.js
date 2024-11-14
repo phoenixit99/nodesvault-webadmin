@@ -17,7 +17,7 @@ const ProfileSettings = lazy(() => import('../pages/protected/ProfileSettings'))
 const GettingStarted = lazy(() => import('../pages/GettingStarted'))
 const DocFeatures = lazy(() => import('../pages/DocFeatures'))
 const DocComponents = lazy(() => import('../pages/DocComponents'))
-
+// const EditProductPage = lazy(() => import('../features/project/edit'))
 
 const routes = [
   {
@@ -80,6 +80,10 @@ const routes = [
     path: '/blank',
     component: Blank,
   },
+  // {
+  //   path: '/product-edit/:productId', // Define the route with a parameter
+  //   component: EditProductPage,
+  // }
 ]
 
 export default routes
